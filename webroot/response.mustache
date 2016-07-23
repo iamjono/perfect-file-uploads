@@ -1,0 +1,54 @@
+{{!
+
+This is the mustache template file for the response from File Upload example.
+
+}}<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+table {
+border-collapse: collapse;
+}
+table, th, td {
+border: 1px solid black;
+}
+td {
+padding: 10px;
+}
+th {
+padding: 10px;
+}
+</style>
+<title>{{title}}</title>
+</head>
+<body>
+<h1>File Uploads</h1>
+<h2>This example illustrates handling file uploads with Perfect and Server Side Swift.</h2>
+<p>
+{{count}}{{^count}}0{{/count}} files were uploaded.<br>
+{{#count}}
+<p>
+<table>
+<tr><th>File Name</th><th>Field Name</th><th>File Size</th><th>Content Type</th><th>Temp File Name</th></tr>
+{{#files}}
+<tr><td>{{fileName}}</td><td>{{fieldName}}</td><td>{{fileSize}}</td><td>{{contentType}}</td><td>{{tmpFileName}}</td></tr>
+{{/files}}
+</table>
+</p>
+{{/count}}
+
+{{paramsCount}}{{^paramsCount}}0{{/paramsCount}} parameters were POSTed.<br>
+{{#paramsCount}}
+<p>
+<ul>
+{{#params}}
+<li>{{paramName}} = {{paramValue}}</li>
+{{/params}}
+</ul>
+</p>
+{{/paramsCount}}
+</p>
+<p><a href="/">Back to file uploads</a></p>
+</body>
+</html>
