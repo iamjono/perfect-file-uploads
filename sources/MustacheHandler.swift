@@ -38,6 +38,13 @@ struct UploadHandler: MustachePageHandler { // all template handlers must inheri
 		// Grab the WebRequest so we can get information about what was uploaded
 		let request = contxt.webRequest
 
+		// create uploads dir to store files
+		let fileDir = Dir(Dir.workingDir.path + "files")
+		do {
+			try fileDir.create()
+		} catch {
+			print(error)
+		}
 		// Grab the fileUploads array and see what's there
 		// If this POST was not multi-part, then this array will be empty
 
@@ -54,6 +61,15 @@ struct UploadHandler: MustachePageHandler { // all template handlers must inheri
 					"fileSize": upload.fileSize,
 					"tmpFileName": upload.tmpFileName
 					])
+
+				// move file to webroot
+				let thisFile = File(upload.tmpFileName)
+				do {
+					let _ = try thisFile.moveTo(path: fileDir.path + upload.fileName, overWrite: true)
+				} catch {
+					print(error)
+				}
+
 			}
 			values["files"] = ary
 			values["count"] = ary.count
